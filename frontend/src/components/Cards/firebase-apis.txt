@@ -1,0 +1,68 @@
+
+const useStyles = makeStyles((theme) => ({
+    table: {
+      marginTop: theme.spacing(5),
+    },
+  }));
+  
+  function toggleProcess(){
+    db.collection("Grievances").doc(id).update({
+        progress: !progress
+    })
+  }
+  
+  function deleteGrievances(){
+    db.collection("Grievances").doc(id).delete();
+  }
+  
+  const [todos,setTodos] = useState([])
+      const [todoInput, setTodoInput] = useState('');
+  
+      useEffect(() => {
+          getTodos();
+      }, [])
+  
+      function handleChange(e){
+          setTodoInput(e.target.value);
+      }
+  
+      function getSub(){
+          db.collection("Grievances").orderBy('timestamp', 'desc').onSnapshot(function (querySnapshot) {
+              setTodos(
+                  querySnapshot.docs.map((doc) => ({
+                      id: doc.id,
+                      todo: doc.data().todo,
+                      progress: doc.data().progress,
+                  }))
+              );
+          })
+      }
+  
+      function addSub(e){
+          e.preventDefault();
+          console.log("submitted");
+  
+          db.collection('Grievances').add({
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              todo: todoInput,
+              progress: true,
+          });
+  
+          setTodoInput('');
+      }
+  
+  
+      function addSub(e){
+          e.preventDefault();
+          console.log("submitted");
+  
+          db.collection('Grievances').add({
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              todo: todoInput,
+              progress: true,
+          });
+  
+          setTodoInput('');
+      }
+  
+  
